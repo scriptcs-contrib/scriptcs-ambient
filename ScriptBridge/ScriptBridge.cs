@@ -51,7 +51,6 @@ namespace ScriptBridge
             var logProvider = new ColoredConsoleLogProvider(LogLevel.Info, console);
 
             var builder = new ScriptServicesBuilder(console, logProvider);
-            builder.ScriptHostFactory<MY_Factory>();
             builder.LogLevel(LogLevel.Info).Cache(false).Repl(false).ScriptEngine<CSharpScriptEngine>();
 
             var shf = new MY_Factory(m_globals);
@@ -62,7 +61,6 @@ namespace ScriptBridge
             executor.Initialize(Enumerable.Empty<string>(), Enumerable.Empty<IScriptPack>());
 
             var result = executor.ExecuteScript(Code);
-            m_globals["OutputAmbient"] = shf.m_host.OutputAmbient;
 
             if (result.CompileExceptionInfo != null)
                 throw result.CompileExceptionInfo.SourceException;
