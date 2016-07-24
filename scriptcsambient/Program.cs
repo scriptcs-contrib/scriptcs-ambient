@@ -28,9 +28,16 @@ namespace scriptcsambient
             globs.Add("InputAmbient", it);
             globs.Add("OutputAmbient", ot);
             var sb = new ScriptBridge.ScriptBridge(globs);
-            var code = "OutputAmbient.OutThingString = InputAmbient.ThingString + \" (Out)\";";
-            sb.Execute(code);
+            var code = @"OutputAmbient.OutThingString = InputAmbient.ThingString + "" (Out)"";
+Console.WriteLine(1234);
+""some return object""";
+            var rv = sb.Execute(code);
+            Console.WriteLine("---- OutThing ----");
             Console.WriteLine(ot.OutThingString);
+            Console.WriteLine("---- Return Value ----");
+            Console.WriteLine(rv);
+            Console.WriteLine("---- Console ----");
+            Console.WriteLine(sb.CapturedOutput);
         }
     }
 }

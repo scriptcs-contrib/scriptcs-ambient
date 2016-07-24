@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,8 @@ namespace ScriptBridge
             m_globals = Globals;
         }
 
+        public dynamic ReturnValue { get; private set; }
+        public string CapturedOutput { get; private set; }
         public dynamic Execute(string Code)
         {
             var console = (IConsole)new ScriptConsole();
@@ -60,7 +63,13 @@ namespace ScriptBridge
             var executor = (ScriptExecutor)services.Executor;
             executor.Initialize(Enumerable.Empty<string>(), Enumerable.Empty<IScriptPack>());
 
+            var cap = new StringWriter();
+            var oldout = Console.Out;
+            Console.SetOut(cap);
             var result = executor.ExecuteScript(Code);
+            Console.SetOut(oldout);
+            ReturnValue = result.ReturnValue;
+            CapturedOutput = cap.ToString();
 
             if (result.CompileExceptionInfo != null)
                 throw result.CompileExceptionInfo.SourceException;
