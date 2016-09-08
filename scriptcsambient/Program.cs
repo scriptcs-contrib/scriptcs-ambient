@@ -38,6 +38,7 @@ Console.WriteLine(1234);
             Console.WriteLine(rv);
             Console.WriteLine("---- Console ----");
             Console.WriteLine(sb.CapturedOutput);
+            rv = sb.Execute(@"Console.WriteLine(InputAmbient.ThingString);");
         }
     }
 }
